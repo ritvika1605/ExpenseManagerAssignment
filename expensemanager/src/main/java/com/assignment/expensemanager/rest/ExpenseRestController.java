@@ -50,7 +50,7 @@ public class ExpenseRestController {
     public ResponseEntity updateExpense(@RequestBody Expense expense) throws ParseException{
         ApiResponse apiResponse = new ApiResponse();
 
-        if(expense.getCategory()==null | expense.getAmount()==null | expense.getExpenseTitle()==null |expense.getMonthYear()==null )
+        if(expense.getId()==null | expense.getCategory()==null | expense.getAmount()==null | expense.getExpenseTitle()==null |expense.getMonthYear()==null )
         {
             apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             apiResponse.setMessage("Check your Request");
@@ -85,10 +85,10 @@ public class ExpenseRestController {
 
 
     @PostMapping(URLMappings.SEND_MAIL)
-    public ResponseEntity sendExpenseEmail(@RequestBody ApiRequest apiRequest){
+    public ResponseEntity sendExpenseEmail(@RequestBody String emailId){
         ApiResponse apiResponse = new ApiResponse();
-        System.out.println(apiRequest.getEmail());
-        String emailSentMessage=expenseService.sendMail(apiRequest.getEmail());
+        System.out.println(emailId);
+        String emailSentMessage=expenseService.sendMail(emailId);
         return new ResponseEntity<>("Message sent", HttpStatus.OK);
     }
 
